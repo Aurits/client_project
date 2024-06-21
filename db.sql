@@ -14,11 +14,8 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-
 /*!40101 SET NAMES utf8mb4 */;
 
 --
@@ -29,86 +26,77 @@ SET time_zone = "+00:00";
 -- Table structure for table `cart`
 --
 
-CREATE TABLE `CART` (
-    `ID` INT(11) NOT NULL AUTO_INCREMENT,
-    `PRODUCT_NAME` VARCHAR(100) NOT NULL,
-    `PRODUCT_PRICE` VARCHAR(50) NOT NULL,
-    `PRODUCT_IMAGE` VARCHAR(255) NOT NULL,
-    `QTY` INT(10) NOT NULL,
-    `TOTAL_PRICE` VARCHAR(100) NOT NULL,
-    PRIMARY KEY (`ID`)
+CREATE TABLE `cart` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `product_name` VARCHAR(100) NOT NULL,
+    `product_price` VARCHAR(50) NOT NULL,
+    `product_image` VARCHAR(255) NOT NULL,
+    `qty` INT(10) NOT NULL,
+    `total_price` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=LATIN1 COLLATE=LATIN1_SWEDISH_CI;
 
 -- --------------------------------------------------------
 -- Table structure for table `customers`
 --
 
-CREATE TABLE `CUSTOMERS` (
-    `ID` INT(11) NOT NULL AUTO_INCREMENT,
-    `NAME` VARCHAR(255) NOT NULL,
-    `EMAIL` VARCHAR(255) NOT NULL,
-    `PHONE` VARCHAR(20) DEFAULT NULL,
-    `LOCATION` VARCHAR(255) DEFAULT NULL,
-    PRIMARY KEY (`ID`)
+CREATE TABLE `customers` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `phone` VARCHAR(20) DEFAULT NULL,
+    `location` VARCHAR(255) DEFAULT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE=UTF8MB4_GENERAL_CI;
 
 -- --------------------------------------------------------
 -- Table structure for table `orders`
 --
 
-CREATE TABLE `ORDERS` (
-    `ID` INT(11) NOT NULL AUTO_INCREMENT,
-    `NAME` VARCHAR(100) NOT NULL,
-    `EMAIL` VARCHAR(100) NOT NULL,
-    `PHONE` VARCHAR(20) NOT NULL,
-    `ADDRESS` VARCHAR(255) NOT NULL,
-    `PMODE` VARCHAR(50) NOT NULL,
-    `PRODUCTS` VARCHAR(255) NOT NULL,
-    `AMOUNT_PAID` VARCHAR(100) NOT NULL,
-    PRIMARY KEY (`ID`)
+CREATE TABLE `orders` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+    `email` VARCHAR(100) NOT NULL,
+    `phone` VARCHAR(20) NOT NULL,
+    `address` VARCHAR(255) NOT NULL,
+    `pmode` VARCHAR(50) NOT NULL,
+    `products` VARCHAR(255) NOT NULL,
+    `amount_paid` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=LATIN1 COLLATE=LATIN1_SWEDISH_CI;
 
 -- --------------------------------------------------------
 -- Table structure for table `product`
 --
 
-CREATE TABLE `PRODUCT` (
-    `ID` INT(11) NOT NULL AUTO_INCREMENT,
-    `PRODUCT_NAME` VARCHAR(255) NOT NULL,
-    `PRODUCT_PRICE` VARCHAR(100) NOT NULL,
-    `PRODUCT_QTY` INT(11) NOT NULL DEFAULT 1,
-    `PRODUCT_IMAGE` VARCHAR(255) NOT NULL,
-    `PRODUCT_DESCRIPTION` VARCHAR(300) NOT NULL,
-    PRIMARY KEY (`ID`)
+CREATE TABLE `product` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `product_name` VARCHAR(255) NOT NULL,
+    `product_price` VARCHAR(100) NOT NULL,
+    `product_qty` INT(11) NOT NULL DEFAULT 1,
+    `product_image` VARCHAR(255) NOT NULL,
+    `product_description` VARCHAR(300) NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=LATIN1 COLLATE=LATIN1_SWEDISH_CI;
 
 -- --------------------------------------------------------
 -- Table structure for table `users`
 --
 
-CREATE TABLE `USERS` (
-    `ID` INT(11) NOT NULL AUTO_INCREMENT,
-    `USERNAME` VARCHAR(255) NOT NULL,
-    `PASSWORD` VARCHAR(255) NOT NULL,
-    `EMAIL` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`ID`)
+CREATE TABLE `users` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(255) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE=UTF8MB4_GENERAL_CI;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `USERS` (
-    `ID`,
-    `USERNAME`,
-    `PASSWORD`,
-    `EMAIL`
-) VALUES (
-    2,
-    'Admin',
-    'Flip@admin',
-    'ateraxantonio@gmail.com'
-);
+INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
+(2, 'Admin', 'Flip@admin', 'ateraxantonio@gmail.com');
 
 -- --------------------------------------------------------
 -- Additional tables for Blogs and Categories
@@ -118,71 +106,39 @@ INSERT INTO `USERS` (
 -- Table structure for table `blog_categories`
 --
 
-CREATE TABLE `BLOG_CATEGORIES` (
-    `ID` INT(11) NOT NULL AUTO_INCREMENT,
-    `CATEGORY_NAME` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`ID`)
+CREATE TABLE `blog_categories` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `category_name` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE=UTF8MB4_GENERAL_CI;
 
 -- Dumping data for table `blog_categories`
-INSERT INTO `BLOG_CATEGORIES` (
-    `ID`,
-    `CATEGORY_NAME`
-) VALUES (
-    1,
-    'Decor Tips'
-),
-(
-    2,
-    'Product Highlights'
-),
-(
-    3,
-    'Customer Stories'
-);
+INSERT INTO `blog_categories` (`id`, `category_name`) VALUES
+(1, 'Decor Tips'),
+(2, 'Product Highlights'),
+(3, 'Customer Stories');
 
 -- --------------------------------------------------------
 -- Table structure for table `blogs`
 --
 
-CREATE TABLE `BLOGS` (
-    `ID` INT(11) NOT NULL AUTO_INCREMENT,
-    `TITLE` VARCHAR(255) NOT NULL,
-    `CONTENT` TEXT NOT NULL,
-    `CATEGORY_ID` INT(11) NOT NULL,
-    PRIMARY KEY (`ID`),
-    KEY `CATEGORY_ID` (`CATEGORY_ID`)
+CREATE TABLE `blogs` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(255) NOT NULL,
+    `content` TEXT NOT NULL,
+    `category_id` INT(11) NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `category_id` (`category_id`)
 ) ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE=UTF8MB4_GENERAL_CI;
 
 -- Dumping data for table `blogs`
-INSERT INTO `BLOGS` (
-    `ID`,
-    `TITLE`,
-    `CONTENT`,
-    `CATEGORY_ID`
-) VALUES (
-    1,
-    'Choosing the Right Decor for Your Space',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    1
-),
-(
-    2,
-    'Top 10 Products to Enhance Your Living Room',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    2
-),
-(
-    3,
-    'Customer Spotlight: Joan and Her Unique Decor Journey',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    3
-);
+INSERT INTO `blogs` (`id`, `title`, `content`, `category_id`) VALUES
+(1, 'Choosing the Right Decor for Your Space', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 1),
+(2, 'Top 10 Products to Enhance Your Living Room', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 2),
+(3, 'Customer Spotlight: Joan and Her Unique Decor Journey', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 3);
 
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

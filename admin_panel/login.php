@@ -6,9 +6,9 @@ ini_set('display_errors', 1);
 
 // Database configuration
 $servername = "localhost";
-$username = "u105432154_db";
-$password = "1D|ov3q]In!";
-$database = "u105432154_db";
+$username = "root";
+$password = "";
+$database = "client_app";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $database);
@@ -46,5 +46,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Close connection
 mysqli_close($conn);
-
-?>
