@@ -1,170 +1,159 @@
-<!-- include header -->
-<?php include 'header.php'; ?>
-<!-- breadcrumb -->
-<div class="container">
-  <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-    <a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
-      Home
-      <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-    </a>
+<?php
 
-    <span class="stext-109 cl4"> Shoping Cart </span>
-  </div>
+// Include header
+include 'header.php';
+
+// Database configuration and connection
+require 'db_connection.php';
+
+$allItems = '';
+$items = [];
+$grand_totals = 0;
+
+$sql = "SELECT CONCAT(product_name, '(',qty,')') AS ItemQty, total_price FROM cart";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+  $grand_totals += $row['total_price'];
+  $items[] = $row['ItemQty'];
+}
+$allItems = implode(', ', $items);
+
+
+// Fetch cart data from database
+$stmt = $conn->prepare('SELECT * FROM cart');
+$stmt->execute();
+$result = $stmt->get_result();
+$grand_total = 0;
+?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- Breadcrumb -->
+<div class="container mt-3 mb-5">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">Home</a></li>
+      <li class="breadcrumb-item active stext-109 cl4" aria-current="page">Shopping Cart</li>
+    </ol>
+  </nav>
 </div>
 
-<!-- Shoping Cart -->
-<form class="bg0 p-t-75 p-b-85">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
-        <div class="m-l-25 m-r--38 m-lr-0-xl">
-          <div class="wrap-table-shopping-cart">
-            <table class="table-shopping-cart">
-              <tr class="table_head">
-                <th class="column-1">Product</th>
-                <th class="column-2"></th>
-                <th class="column-3">Price</th>
-                <th class="column-4">Quantity</th>
-                <th class="column-5">Total</th>
-              </tr>
-
-              <tr class="table_row">
-                <td class="column-1">
-                  <div class="how-itemcart1">
-                    <img src="images/item-cart-04.jpg" alt="IMG" />
-                  </div>
-                </td>
-                <td class="column-2">Fresh Strawberries</td>
-                <td class="column-3">$ 36.00</td>
-                <td class="column-4">
-                  <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                    <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                      <i class="fs-16 zmdi zmdi-minus"></i>
-                    </div>
-
-                    <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="1" />
-
-                    <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                      <i class="fs-16 zmdi zmdi-plus"></i>
-                    </div>
-                  </div>
-                </td>
-                <td class="column-5">$ 36.00</td>
-              </tr>
-
-              <tr class="table_row">
-                <td class="column-1">
-                  <div class="how-itemcart1">
-                    <img src="images/item-cart-05.jpg" alt="IMG" />
-                  </div>
-                </td>
-                <td class="column-2">Lightweight Jacket</td>
-                <td class="column-3">$ 16.00</td>
-                <td class="column-4">
-                  <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                    <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                      <i class="fs-16 zmdi zmdi-minus"></i>
-                    </div>
-
-                    <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product2" value="1" />
-
-                    <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                      <i class="fs-16 zmdi zmdi-plus"></i>
-                    </div>
-                  </div>
-                </td>
-                <td class="column-5">$ 16.00</td>
-              </tr>
+<!-- Shopping Cart Section -->
+<div class="container">
+  <div class="row">
+    <!-- Cart Items -->
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Shopping Cart</h4>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php while ($row = $result->fetch_assoc()) : ?>
+                  <tr>
+                    <td>
+                      <div class="media">
+                        <img src="<?= $row['product_image'] ?>" class="mr-3" alt="Product Image" style="max-width: 100px;">
+                        <div class="media-body">
+                          <?= $row['product_name'] ?>
+                        </div>
+                      </div>
+                    </td>
+                    <td><i class="fas fa-shillings-sign"></i><?= number_format($row['product_price'], 2); ?>
+                    </td>
+                    <td>
+                      <div class="input-group">
+                        <input type="number" class="form-control itemQty" value="<?= $row['qty'] ?>" style="width:75px;">
+                      </div>
+                    </td>
+                    <td><i class="fas fa-shillings-sign"></i><?= number_format($row['total_price'], 2); ?>
+                    </td>
+                    <td>
+                      <a href="action.php?remove=<?= $row['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure want to remove this item?');"><i class="fas fa-trash-alt"></i> Remove</a>
+                    </td>
+                  </tr>
+                  <?php $grand_total += $row['total_price']; ?>
+                <?php endwhile; ?>
+              </tbody>
             </table>
-          </div>
-
-          <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-            <div class="flex-w flex-m m-r-20 m-tb-5">
-              <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code" />
-
-              <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-                Apply coupon
-              </div>
-            </div>
-
-            <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-              Update Cart
-            </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
-        <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
-          <h4 class="mtext-109 cl2 p-b-30">Cart Totals</h4>
-
-          <div class="flex-w flex-t bor12 p-b-13">
-            <div class="size-208">
-              <span class="stext-110 cl2"> Subtotal: </span>
-            </div>
-
-            <div class="size-209">
-              <span class="mtext-110 cl2"> $79.65 </span>
-            </div>
+    <!-- Cart Summary -->
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Cart Totals</h4>
+          <div class="d-flex justify-content-between">
+            <span>Subtotal:</span>
+            <span><i class="fas fa-shillings-sign"></i><?= number_format($grand_total, 2); ?></span>
           </div>
-
-          <div class="flex-w flex-t bor12 p-t-15 p-b-30">
-            <div class="size-208 w-full-ssm">
-              <span class="stext-110 cl2"> Shipping: </span>
-            </div>
-
-            <div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
-              <p class="stext-111 cl6 p-t-2">
-                There are no shipping methods available. Please double check
-                your address, or contact us if you need any help.
-              </p>
-
-              <div class="p-t-15">
-                <span class="stext-112 cl8"> Calculate Shipping </span>
-
-                <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                  <select class="js-select2" name="time">
-                    <option>Select a country...</option>
-                    <option>USA</option>
-                    <option>UK</option>
-                  </select>
-                  <div class="dropDownSelect2"></div>
-                </div>
-
-                <div class="bor8 bg0 m-b-12">
-                  <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state" placeholder="State /  country" />
-                </div>
-
-                <div class="bor8 bg0 m-b-22">
-                  <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="Postcode / Zip" />
-                </div>
-
-                <div class="flex-w">
-                  <div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
-                    Update Totals
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="d-flex justify-content-between mt-2">
+            <span>Shipping:</span>
+            <span>No shipping options available</span>
           </div>
-
-          <div class="flex-w flex-t p-t-27 p-b-33">
-            <div class="size-208">
-              <span class="mtext-101 cl2"> Total: </span>
-            </div>
-
-            <div class="size-209 p-t-1">
-              <span class="mtext-110 cl2"> $79.65 </span>
-            </div>
+          <hr>
+          <div class="d-flex justify-content-between">
+            <span>Total:</span>
+            <span><i class="fas fa-shillings-sign"></i><?= number_format($grand_total, 2); ?></span>
           </div>
-
-          <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-            Proceed to Checkout
-          </button>
+          <hr>
+          <div class="text-center">
+            <!-- Clear Cart Button -->
+            <a href="action.php?clear=all" class="btn btn-danger btn-block mt-4" onclick="return confirm('Are you sure want to clear your cart?');">Clear Cart</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</form>
-<!-- include footer -->
+</div>
+
+<!-- Checkout Form -->
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Checkout</h4>
+          <form action="" method="post" id="placeOrder">
+            <input type="hidden" name="products" value="<?= $allItems; ?>">
+            <input type="hidden" name="grand_total" value="<?= $grand_total; ?>">
+            <div class="form-group">
+              <input type="text" name="name" class="form-control" placeholder="Enter Name" required>
+            </div>
+            <div class="form-group">
+              <input type="email" name="emailAddress" class="form-control" placeholder="Enter E-Mail" required>
+            </div>
+            <div class="form-group">
+              <input type="tel" name="phone" class="form-control" placeholder="Enter Phone" required>
+            </div>
+            <div class="form-group">
+              <textarea name="address" class="form-control" rows="3" placeholder="Enter Delivery Address Here..." required></textarea>
+            </div>
+            <div class="form-group" style="display: none;">
+              <select name="pmode" class="form-control">
+                <option value="flutterwave" selected>payment</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input type="submit" name="submit" value="Place Order" class="btn btn-success btn-block">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php include 'footer.php'; ?>

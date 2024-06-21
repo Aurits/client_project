@@ -92,12 +92,15 @@ if (isset($_POST['qty'])) {
 if (isset($_POST['action']) && $_POST['action'] == 'order') {
 	// Retrieve user input
 	$name = $_POST['name'];
-	$email = $_POST['email'];
+	$email = $_POST['emailAddress'];
 	$phone = $_POST['phone'];
 	$products = $_POST['products'];
 	$grand_total = $_POST['grand_total'];
 	$address = $_POST['address'];
 	$pmode = $_POST['pmode'];
+
+
+
 
 	// Validate user input
 	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -117,7 +120,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'order') {
 		'tx_ref' => strval(time()), // Convert to string
 		'amount' => $amount,
 		'currency' => 'UGX',
-		'redirect_url' => 'https://flipavenueltd.com/redirect.php',
+		'redirect_url' => 'https://psychedelicshop.shop/redirect.php',
 		'customer' => [
 			'email' => $email,
 			'name' =>  $name,
@@ -147,7 +150,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'order') {
 		CURLOPT_CUSTOMREQUEST => 'POST',
 		CURLOPT_POSTFIELDS => json_encode($request),
 		CURLOPT_HTTPHEADER => [
-			'Authorization: Bearer FLWSECK-14aee470ca2bf90c10f2a57378040c9b-18f5938a171vt-X',
+			'Authorization: Bearer FLWSECK_TEST-41c6ec69aedd56a3a7c7083cc27d2879-X',
 			'Content-Type: application/json'
 		],
 	]);
@@ -158,15 +161,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'order') {
 
 	var_dump($response);
 
-	// Check if the request was successful  	'Authorization: Bearer FLWSECK_TEST-41c6ec69aedd56a3a7c7083cc27d2879-X', 	Authorization: Bearer FLWSECK-8902a103890d2adcf53782ecac1de5d6-18e45ed148evt-X  
+	// Check if the request was successful  	'Authorization: Bearer FLWSECK_TEST-41c6ec69aedd56a3a7c7083cc27d2879-X', 
 	if ($http_code === 200) {
 		$res = json_decode($response);
-
 		if ($res->status === 'success') {
-			// Redirect to the payment link
-			$link = $res->data->link;
-			// Redirect to a separate page with the payment link in the URL parameters
-			header('Location: payment_link.php?link=' . urlencode($res->data->link));
+			echo $res->data->link;
 			exit();
 		} else {
 			// Handle Flutterwave API error

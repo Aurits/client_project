@@ -27,15 +27,15 @@ if (isset($_GET['status'])) {
                 CURLOPT_CUSTOMREQUEST => "GET",
                 CURLOPT_HTTPHEADER => array(
                     "Content-Type: application/json",
-                    'Authorization: Bearer FLWSECK-14aee470ca2bf90c10f2a57378040c9b-18f5938a171vt-X',
+                    'Authorization: Bearer FLWSECK_TEST-41c6ec69aedd56a3a7c7083cc27d2879-X',
                 ),
             ));
             $response = curl_exec($curl);
             curl_close($curl);
-            
+
             // Parse the JSON response
             $res = json_decode($response);
-            
+
             // Check if the response was successful
             if ($res->status === 'success') {
                 $data = $res->data;
@@ -44,9 +44,9 @@ if (isset($_GET['status'])) {
                 $name = $data->customer->name;
                 $email = $data->customer->email;
                 $phone = $data->customer->phone_number;
-                $address = $data->meta->address; 
+                $address = $data->meta->address;
                 $pmode = $data->payment_type;
-                $products_string = $data->meta->products; 
+                $products_string = $data->meta->products;
                 $products_string = str_replace('\"', ' ', $products_string);
                 $amount_paid = $data->charged_amount;
 
@@ -54,30 +54,30 @@ if (isset($_GET['status'])) {
                 $stmt = $conn->prepare('INSERT INTO orders (name, email, phone, address, pmode, products, amount_paid) VALUES (?, ?, ?, ?, ?, ?, ?)');
                 $stmt->bind_param('sssssss', $name, $email, $phone, $address, $pmode, $products_string, $amount_paid);
                 $stmt->execute();
-                
+
                 // Clear Cart
                 $stmt = $conn->prepare('DELETE FROM cart');
                 $stmt->execute();
-                
+
                 // Extract products from the string and create an array
                 $products_array = explode(", ", $products_string);
-                
+
                 $products = [];
-                
+
                 // Loop through each product string and extract product name and quantity
                 foreach ($products_array as $product_string) {
                     // Remove extra quotes from the product string
                     $product_string = trim($product_string, '"');
-                    
+
                     // Split the product string into name and quantity
                     $parts = explode('(', $product_string);
-                    
+
                     // Check if the parts array has both name and quantity
                     if (count($parts) == 2) {
                         // Extract product name and quantity
                         $product_name = trim($parts[0]);
                         $quantity = intval(trim($parts[1], ')'));
-                        
+
                         // Add product details to the products array
                         $products[] = [
                             'name' => $product_name,
@@ -88,14 +88,14 @@ if (isset($_GET['status'])) {
                         // You might want to log an error or handle it according to your application logic
                     }
                 }
-                
+
                 // Check if $products is an array before using it in foreach loop
                 if (is_array($products)) {
                     // Update product quantities
                     foreach ($products as $product) {
                         $product_name = $product['name'];
                         $quantity = intval($product['quantity']);
-                        
+
                         // Update product quantity in the products table
                         $stmt = $conn->prepare('UPDATE product SET product_qty = product_qty - ? WHERE product_name = ?');
                         $stmt->bind_param('is', $quantity, $product_name);
@@ -105,7 +105,7 @@ if (isset($_GET['status'])) {
                     // Handle case where $products is not an array
                     echo "Products is not an array";
                 }
-                
+
                 // Display transaction details in a styled table with Bootstrap
                 echo "<link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet'>";
                 echo "<div class='container'>";
@@ -144,4 +144,3 @@ if (isset($_GET['status'])) {
         }
     }
 }
-?>

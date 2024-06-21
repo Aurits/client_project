@@ -416,16 +416,37 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-
         // Sending Form data to the server
         $("#placeOrder").submit(function(e) {
             e.preventDefault();
-
             $.ajax({
                 url: 'action.php',
                 method: 'post',
                 data: $('form').serialize() + "&action=order",
                 success: function(response) {
+                    console.log(response);
+
+                    // Regular expression to match URLs starting with "http" or "https"
+                    const urlRegex = /(https?:\/\/[^\s]+)(?=.*?\}\})/g;
+                    let match;
+                    let url;
+
+                    // Find the first matched URL
+                    while ((match = urlRegex.exec(response)) !== null) {
+                        url = match[1]; // Capture the URL (group 1)
+                        url = url.replace(/"$/, ''); // Remove trailing double quote, if present
+                        break; // Exit loop after finding the first URL
+                    }
+
+                    if (url) {
+                        // Navigate to the URL in the same tab
+                        window.location.href = url;
+                    } else {
+                        console.error('No valid URL found in the response');
+                        // Handle case where no valid URL is found
+                    }
+
+
                     $("#order").html(response);
                 }
             });
@@ -540,7 +561,8 @@
 </script>
 <!--===============================================================================================-->
 <script src="js/main.js"></script>
-
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script>
 </body>
 
 </html>
