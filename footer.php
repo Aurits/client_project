@@ -97,8 +97,7 @@
 
                 <form>
                     <div class="wrap-input1 w-full p-b-4">
-                        <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
-                            placeholder="email@example.com">
+                        <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
                         <div class="focus-input1 trans-04"></div>
                     </div>
 
@@ -168,8 +167,7 @@
                                     <div class="wrap-pic-w pos-relative">
                                         <img src="images/product-03.jpg" alt="IMG-PRODUCT">
 
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                            href="images/product-detail-01.jpg">
+                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-01.jpg">
                                             <i class="fa fa-expand"></i>
                                         </a>
                                     </div>
@@ -179,8 +177,7 @@
                                     <div class="wrap-pic-w pos-relative">
                                         <img src="images/product-03.jpg" alt="IMG-PRODUCT">
 
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                            href="images/product-detail-02.jpg">
+                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-02.jpg">
                                             <i class="fa fa-expand"></i>
                                         </a>
                                     </div>
@@ -190,8 +187,7 @@
                                     <div class="wrap-pic-w pos-relative">
                                         <img src="images/product-03.jpg" alt="IMG-PRODUCT">
 
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                            href="images/product-detail-03.jpg">
+                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-03.jpg">
                                             <i class="fa fa-expand"></i>
                                         </a>
                                     </div>
@@ -262,16 +258,14 @@
                                             <i class="fs-16 zmdi zmdi-minus"></i>
                                         </div>
 
-                                        <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                            name="num-product" value="1">
+                                        <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
 
                                         <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                             <i class="fs-16 zmdi zmdi-plus"></i>
                                         </div>
                                     </div>
 
-                                    <button
-                                        class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
                                         Add to cart
                                     </button>
                                 </div>
@@ -281,25 +275,20 @@
                         <!--  -->
                         <div class="flex-w flex-m p-l-100 p-t-40 respon7">
                             <div class="flex-m bor9 p-r-10 m-r-11">
-                                <a href="#"
-                                    class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-                                    data-tooltip="Add to Wishlist">
+                                <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
                                     <i class="zmdi zmdi-favorite"></i>
                                 </a>
                             </div>
 
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                                data-tooltip="Facebook">
+                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
                                 <i class="fa fa-facebook"></i>
                             </a>
 
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                                data-tooltip="Twitter">
+                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
                                 <i class="fa fa-twitter"></i>
                             </a>
 
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                                data-tooltip="Google Plus">
+                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
                                 <i class="fa fa-google-plus"></i>
                             </a>
                         </div>
@@ -318,14 +307,155 @@
 <script src="vendor/bootstrap/js/popper.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        // Send product details in the server
+        $(".addItemBtn").click(function(e) {
+            e.preventDefault();
+            var $form = $(this).closest(".form-submit");
+            var pid = $form.find(".pid").val();
+            var pname = $form.find(".pname").val();
+            var pprice = $form.find(".pprice").val();
+            var pimage = $form.find(".pimage").val();
+            var pqty = $form.find(".pqty").val();
+
+            //dump all
+            console.log(pid);
+            console.log(pname);
+            console.log(pprice);
+            console.log(pimage);
+
+            console.log(pqty);
+
+            $.ajax({
+                url: 'action.php',
+                method: 'post',
+                data: {
+                    pid: pid,
+                    pname: pname,
+                    pprice: pprice,
+                    pqty: pqty,
+                    pimage: pimage,
+
+                },
+                success: function(response) {
+                    $("#message").html(response);
+                    window.scrollTo(0, 0);
+                    setTimeout(function() {
+                        window.location.href =
+                            "shopping-cart.php"; // Redirect to cart.php after 2 seconds
+                    }, 2000);
+                    load_cart_item_number();
+                }
+            });
+        });
+
+        // Load total no.of items added in the cart and display in the navbar
+        load_cart_item_number();
+
+        function load_cart_item_number() {
+            $.ajax({
+                url: 'action.php',
+                method: 'get',
+                data: {
+                    cartItem: "cart_item"
+                },
+                success: function(response) {
+                    $("#cart-item").html(response);
+                }
+            });
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        // Change the item quantity
+        $(".itemQty").on('change', function() {
+            var $el = $(this).closest('tr');
+
+            var pid = $el.find(".pid").val();
+            var pprice = $el.find(".pprice").val();
+            var qty = $el.find(".itemQty").val();
+            location.reload(true);
+            $.ajax({
+                url: 'action.php',
+                method: 'post',
+                cache: false,
+                data: {
+                    qty: qty,
+                    pid: pid,
+                    pprice: pprice
+                },
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+        });
+
+        // Load total no.of items added in the cart and display in the navbar
+        load_cart_item_number();
+
+        function load_cart_item_number() {
+            $.ajax({
+                url: 'action.php',
+                method: 'get',
+                data: {
+                    cartItem: "cart_item"
+                },
+                success: function(response) {
+                    $("#cart-item").html(response);
+                }
+            });
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        // Sending Form data to the server
+        $("#placeOrder").submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: 'action.php',
+                method: 'post',
+                data: $('form').serialize() + "&action=order",
+                success: function(response) {
+                    $("#order").html(response);
+                }
+            });
+        });
+
+        // Load total no.of items added in the cart and display in the navbar
+        load_cart_item_number();
+
+        function load_cart_item_number() {
+            $.ajax({
+                url: 'action.php',
+                method: 'get',
+                data: {
+                    cartItem: "cart_item"
+                },
+                success: function(response) {
+                    $("#cart-item").html(response);
+                }
+            });
+        }
+    });
+</script>
 <script src="vendor/select2/select2.min.js"></script>
 <script>
-$(".js-select2").each(function() {
-    $(this).select2({
-        minimumResultsForSearch: 20,
-        dropdownParent: $(this).next('.dropDownSelect2')
-    });
-})
+    $(".js-select2").each(function() {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2')
+        });
+    })
 </script>
 <!--===============================================================================================-->
 <script src="vendor/daterangepicker/moment.min.js"></script>
@@ -336,77 +466,77 @@ $(".js-select2").each(function() {
 <!--===============================================================================================-->
 <script src="vendor/parallax100/parallax100.js"></script>
 <script>
-$('.parallax100').parallax100();
+    $('.parallax100').parallax100();
 </script>
 <!--===============================================================================================-->
 <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
 <script>
-$('.gallery-lb').each(function() { // the containers for all your galleries
-    $(this).magnificPopup({
-        delegate: 'a', // the selector for gallery item
-        type: 'image',
-        gallery: {
-            enabled: true
-        },
-        mainClass: 'mfp-fade'
+    $('.gallery-lb').each(function() { // the containers for all your galleries
+        $(this).magnificPopup({
+            delegate: 'a', // the selector for gallery item
+            type: 'image',
+            gallery: {
+                enabled: true
+            },
+            mainClass: 'mfp-fade'
+        });
     });
-});
 </script>
 <!--===============================================================================================-->
 <script src="vendor/isotope/isotope.pkgd.min.js"></script>
 <!--===============================================================================================-->
 <script src="vendor/sweetalert/sweetalert.min.js"></script>
 <script>
-$('.js-addwish-b2').on('click', function(e) {
-    e.preventDefault();
-});
-
-$('.js-addwish-b2').each(function() {
-    var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-    $(this).on('click', function() {
-        swal(nameProduct, "is added to wishlist !", "success");
-
-        $(this).addClass('js-addedwish-b2');
-        $(this).off('click');
+    $('.js-addwish-b2').on('click', function(e) {
+        e.preventDefault();
     });
-});
 
-$('.js-addwish-detail').each(function() {
-    var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+    $('.js-addwish-b2').each(function() {
+        var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+        $(this).on('click', function() {
+            swal(nameProduct, "is added to wishlist !", "success");
 
-    $(this).on('click', function() {
-        swal(nameProduct, "is added to wishlist !", "success");
-
-        $(this).addClass('js-addedwish-detail');
-        $(this).off('click');
+            $(this).addClass('js-addedwish-b2');
+            $(this).off('click');
+        });
     });
-});
 
-/*---------------------------------------------*/
+    $('.js-addwish-detail').each(function() {
+        var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
 
-$('.js-addcart-detail').each(function() {
-    var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-    $(this).on('click', function() {
-        swal(nameProduct, "is added to cart !", "success");
+        $(this).on('click', function() {
+            swal(nameProduct, "is added to wishlist !", "success");
+
+            $(this).addClass('js-addedwish-detail');
+            $(this).off('click');
+        });
     });
-});
+
+    /*---------------------------------------------*/
+
+    $('.js-addcart-detail').each(function() {
+        var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+        $(this).on('click', function() {
+            swal(nameProduct, "is added to cart !", "success");
+        });
+    });
 </script>
 <!--===============================================================================================-->
 <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script>
-$('.js-pscroll').each(function() {
-    $(this).css('position', 'relative');
-    $(this).css('overflow', 'hidden');
-    var ps = new PerfectScrollbar(this, {
-        wheelSpeed: 1,
-        scrollingThreshold: 1000,
-        wheelPropagation: false,
-    });
+    $('.js-pscroll').each(function() {
+        $(this).css('position', 'relative');
+        $(this).css('overflow', 'hidden');
+        var ps = new PerfectScrollbar(this, {
+            wheelSpeed: 1,
+            scrollingThreshold: 1000,
+            wheelPropagation: false,
+        });
 
-    $(window).on('resize', function() {
-        ps.update();
-    })
-});
+        $(window).on('resize', function() {
+            ps.update();
+        })
+    });
 </script>
 <!--===============================================================================================-->
 <script src="js/main.js"></script>
