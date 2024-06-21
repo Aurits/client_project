@@ -103,17 +103,36 @@ include 'header.php';
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Revenue
-                            <span><?php echo 'UGX ' . number_format($total_revenue, 2); ?></span>
+                            <span>
+                                <?php
+                // Check if total_revenue is not null and is a valid number
+                if (isset($total_revenue) && is_numeric($total_revenue)) {
+                  echo 'UGX ' . number_format($total_revenue, 2);
+                } else {
+                  echo 'UGX 0.00'; // Default value if total_revenue is null or not numeric
+                }
+                ?>
+                            </span>
                         </h5>
                         <div class="d-flex align-items-center">
                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                 <i class="bi bi-currency-dollar"></i>
                             </div>
                             <div class="ps-3">
-                                <h6><?php echo 'UGX ' . number_format($total_revenue, 2); ?></h6>
+                                <h6>
+                                    <?php
+                  // Check if total_revenue is not null and is a valid number
+                  if (isset($total_revenue) && is_numeric($total_revenue)) {
+                    echo 'UGX ' . number_format($total_revenue, 2);
+                  } else {
+                    echo 'UGX 0.00'; // Default value if total_revenue is null or not numeric
+                  }
+                  ?>
+                                </h6>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <!-- End Revenue Card -->

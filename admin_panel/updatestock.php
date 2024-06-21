@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
         $quantity = $_POST['quantity'];
 
         // Handle image upload
-        $target_dir = "../Edited/";
+        $target_dir = "../site_images/";
         $target_file = $target_dir . basename($_FILES["image"]["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -46,7 +46,7 @@ if (isset($_GET['id'])) {
         if ($uploadOk == 1) {
             if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
                 $image = $_FILES['image']['name'];
-                 $image = "Edited/" . $image;
+                //  $image = "Edited/" . $image;
                 // Update database record with new image path
                 $sql = "UPDATE product SET product_name='$name', product_price='$price', product_description='$description', product_qty='$quantity', product_image='$image' WHERE id='$id'";
                 if (mysqli_query($conn, $sql)) {
@@ -75,9 +75,9 @@ if (isset($_GET['id'])) {
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            padding: 20px;
-        }
+    body {
+        padding: 20px;
+    }
     </style>
 </head>
 
@@ -87,19 +87,23 @@ if (isset($_GET['id'])) {
         <form action="" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?php echo $row['product_name']; ?>" required>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name"
+                    value="<?php echo $row['product_name']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="price">Price:</label>
-                <input type="number" class="form-control" id="price" name="price" placeholder="Price" value="<?php echo $row['product_price']; ?>" required>
+                <input type="number" class="form-control" id="price" name="price" placeholder="Price"
+                    value="<?php echo $row['product_price']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea class="form-control" id="description" name="description" placeholder="Description" required><?php echo $row['product_description']; ?></textarea>
+                <textarea class="form-control" id="description" name="description" placeholder="Description"
+                    required><?php echo $row['product_description']; ?></textarea>
             </div>
             <div class="form-group">
                 <label for="quantity">Quantity:</label>
-                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" value="<?php echo $row['product_qty']; ?>" required>
+                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity"
+                    value="<?php echo $row['product_qty']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="image">Image:</label>

@@ -9,8 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $image = $_FILES['image']['name'];
     // Append directory prefix to image name
-    $image = "Edited/" . $image;
-    $target_dir = "../Edited/";
+    // $image = "Edited/" . $image;
+    $target_dir = "../site_images/";
     $target_file = $target_dir . basename($image);
 
     // Check if the file was uploaded successfully

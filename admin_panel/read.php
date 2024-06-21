@@ -9,7 +9,7 @@ if (mysqli_num_rows($result) > 0) {
         echo "<tr>";
         echo "<td>" . $row["id"] . "</td>";
         echo "<td>" . $row["product_name"] . "</td>";
-        echo "<td><img src='../" . $row["product_image"] . "' width='100'></td>";
+        echo "<td><img src='../site_images/" . $row["product_image"] . "' width='100'></td>";
         echo "<td>" . $row["product_price"] . "</td>";
         echo "<td>" . $row["product_qty"] . "</td>";
         echo "<td>" . $row["product_description"] . "</td>";
