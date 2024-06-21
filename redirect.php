@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Include the database connection file
-include 'config.php';
+include 'db_connection.php';
 
 if (isset($_GET['status'])) {
     // Check payment status

@@ -60,7 +60,7 @@
                                         <a href="index.php">Shop</a>
                                     </li>
                                     <li style="margin: 0 10px;">
-                                        <a href="blog.php">Blog</a>
+                                        <!-- <a href="blog.php">Blog</a> -->
                                     </li>
                                 </ul>
                             </div>
@@ -77,8 +77,8 @@
                         </div>
 
                         <div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-                            <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
-                                <i class="zmdi zmdi-shopping-cart"></i>
+                            <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11  js-show-cart">
+                                <i class="zmdi zmdi-shopping-cart"></i><span id="cart-item" class="badge badge-info"></span>
                             </div>
                         </div>
 
@@ -96,7 +96,7 @@
         <div class="wrap-header-mobile">
             <!-- Logo moblie -->
             <div class="logo-mobile">
-                <a href="index.php"><img src="images/icons/logo-01.png" alt="IMG-LOGO"></a>
+                <a href="index.php"><img src="images/icons/logo-01.jpg" alt="IMG-LOGO"></a>
             </div>
 
             <!-- Icon header -->
@@ -131,7 +131,7 @@
                 </li>
 
                 <li>
-                    <a href="blog.php">Blog</a>
+                    <!-- <a href="blog.php">Blog</a> -->
                 </li>
 
 
@@ -205,10 +205,7 @@
 
         <div class="header-cart flex-col-l p-l-65 p-r-25">
             <div class="header-cart-title flex-w flex-sb-m p-b-8">
-                <span class="mtext-103 cl2">
-                    Your Cart
-                </span>
-
+                <span class="mtext-103 cl2">Your Cart</span>
                 <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
                     <i class="zmdi zmdi-close"></i>
                 </div>
@@ -216,67 +213,60 @@
 
             <div class="header-cart-content flex-w js-pscroll">
                 <ul class="header-cart-wrapitem w-full">
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img">
-                            <img src="images/product-01.jpg" alt="IMG">
-                        </div>
+                    <?php
 
-                        <div class="header-cart-item-txt p-t-8">
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                mint
-                            </a>
+                    // Database connection
+                    require 'db_connection.php';
 
-                            <span class="header-cart-item-info">
-                                1 x ugx500
-                            </span>
-                        </div>
-                    </li>
+                    // Fetch cart items from database
+                    $sql = "SELECT * FROM cart";
+                    $result = $conn->query($sql);
 
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img">
-                            <img src="images/product-01.jpg" alt="IMG">
-                        </div>
+                    // Initialize variables for total calculation
+                    $grandTotal = 0;
 
-                        <div class="header-cart-item-txt p-t-8">
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                mint
-                            </a>
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $productName = $row['product_name'];
+                            $price = $row['product_price'];
+                            $quantity = $row['qty'];
+                            $totalPrice = $row['total_price'];
+                            $imageSrc = $row['product_image'];
+                            $grandTotal += $totalPrice; // Calculate total price
 
-                            <span class="header-cart-item-info">
-                                1 x ugx500
-                            </span>
-                        </div>
-                    </li>
-
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img">
-                            <img src="images/product-01.jpg" alt="IMG">
-                        </div>
-
-                        <div class="header-cart-item-txt p-t-8">
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                mint
-                            </a>
-
-                            <span class="header-cart-item-info">
-                                1 x ugx500
-                            </span>
-                        </div>
-                    </li>
+                            // Display each cart item
+                    ?>
+                            <li class="header-cart-item flex-w flex-t m-b-12">
+                                <div class="header-cart-item-img">
+                                    <img src="<?php echo $imageSrc; ?>" alt="Product Image">
+                                </div>
+                                <div class="header-cart-item-txt p-t-8">
+                                    <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                                        <?php echo $productName; ?>
+                                    </a>
+                                    <span class="header-cart-item-info">
+                                        <?php echo $quantity; ?> x ugx<?php echo $price; ?>
+                                    </span>
+                                </div>
+                            </li>
+                    <?php
+                        }
+                    } else {
+                        echo "<li class='header-cart-item'>No items in your cart.</li>";
+                    }
+                    ?>
                 </ul>
 
                 <div class="w-full">
                     <div class="header-cart-total w-full p-tb-40">
-                        Total: ugx1500
+                        Total: ugx<?php echo number_format($grandTotal, 2); ?>
                     </div>
-
                     <div class="header-cart-buttons flex-w w-full">
                         <a href="shopping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
                             View Cart
                         </a>
-
                         <a href="shopping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-                            Check Out
+                            Checkout
                         </a>
                     </div>
                 </div>

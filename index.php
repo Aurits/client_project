@@ -1,9 +1,5 @@
 <!-- include header -->
 <?php include 'header.php'; ?>
-
-
-
-
 <?php
 // Include the database connection file
 include 'db_connection.php';
@@ -24,13 +20,13 @@ $image_path = './site_images/';
         <?php
         if (mysqli_num_rows($result) > 0) {
             // Output data of each row
-            while($row = mysqli_fetch_assoc($result)) {
+            while ($row = mysqli_fetch_assoc($result)) {
                 // Ensure the price has the correct format (adding currency)
                 $price = (strpos($row['product_price'], 'UGX') === false) ? 'UGX ' . number_format($row['product_price'], 2) : $row['product_price'];
 
                 // Construct the full image path
                 $full_image_path = $image_path . htmlspecialchars($row['product_image']);
-                ?>
+        ?>
                 <div class="col-md-3 mb-5">
                     <div class="card" style="width: 100%;">
                         <img src="<?php echo $full_image_path; ?>" class="card-img-top" alt="Product Image">
@@ -41,7 +37,7 @@ $image_path = './site_images/';
                         </div>
                     </div>
                 </div>
-                <?php
+        <?php
             }
         } else {
             echo "<p>No products found.</p>";
@@ -51,4 +47,4 @@ $image_path = './site_images/';
 </div>
 
 <!-- include footer -->
- <?php include 'footer.php'; ?>
+<?php include 'footer.php'; ?>
