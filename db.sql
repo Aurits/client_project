@@ -75,6 +75,9 @@ CREATE TABLE `product` (
     `product_price` VARCHAR(100) NOT NULL,
     `product_qty` INT(11) NOT NULL DEFAULT 1,
     `product_image` VARCHAR(255) NOT NULL,
+    `product_image_2` VARCHAR(255) DEFAULT NULL,
+    `product_image_3` VARCHAR(255) DEFAULT NULL,
+    `product_image_4` VARCHAR(255) DEFAULT NULL,
     `product_description` VARCHAR(300) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=LATIN1 COLLATE=LATIN1_SWEDISH_CI;

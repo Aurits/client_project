@@ -7,17 +7,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = $_POST['description'];
     $quantity = $_POST['quantity'];
 
+    // Primary product image
     $image = $_FILES['image']['name'];
-    // Append directory prefix to image name
-    // $image = "Edited/" . $image;
     $target_dir = "../site_images/";
     $target_file = $target_dir . basename($image);
 
-    // Check if the file was uploaded successfully
+    // Additional images
+    $image2 = $_FILES['image2']['name'];
+    $image3 = $_FILES['image3']['name'];
+    $image4 = $_FILES['image4']['name'];
+
+    // Move uploaded files to target directory
     if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-        // File uploaded successfully, proceed with database insertion
-        $sql = "INSERT INTO product (product_name, product_price, product_image, product_qty, product_description) 
-                VALUES ('$name', '$price', '$image', '$quantity', '$description')";
+        // Insert data into the database
+        $sql = "INSERT INTO product (product_name, product_price, product_image, product_qty, product_description,
+                                     product_image_two, product_image_three, product_image_four) 
+                VALUES ('$name', '$price', '$image', '$quantity', '$description', '$image2', '$image3', '$image4')";
 
         if (mysqli_query($conn, $sql)) {
             // Redirect to stock page if insertion is successful
