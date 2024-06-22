@@ -1,6 +1,7 @@
 <!-- include header -->
 <?php include 'header.php'; ?>
 
+
 <!-- Title page -->
 <section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/bg-02.jpg');">
 	<h2 class="ltext-105 cl0 txt-center">
@@ -8,184 +9,62 @@
 	</h2>
 </section>
 
-
 <!-- Content page -->
 <section class="bg0 p-t-62 p-b-60">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-lg-9 p-b-80">
 				<div class="p-r-45 p-r-0-lg">
-					<!-- item blog -->
-					<div class="p-b-63">
-						<a href="blog-detail.php" class="hov-img0 how-pos5-parent">
-							<img src="images/blog-04.jpg" alt="IMG-BLOG">
+					<?php
+					// Fetch blogs from the database
+					$sql_blogs = "SELECT b.id, b.title, b.content, b.blog_image, bc.category_name AS category, b.created_at 
+                                  FROM blogs b
+                                  LEFT JOIN blog_categories bc ON b.category_id = bc.id
+                                  ORDER BY b.created_at DESC";
+					$result_blogs = mysqli_query($conn, $sql_blogs);
 
-							<div class="flex-col-c-m size-123 bg9 how-pos5">
-								<span class="ltext-107 cl2 txt-center">
-									22
-								</span>
+					// Include Parsedown for Markdown support
+					require 'Parsedown.php';
+					$Parsedown = new Parsedown();
 
-								<span class="stext-109 cl3 txt-center">
-									Jan 2018
-								</span>
-							</div>
-						</a>
+					if (mysqli_num_rows($result_blogs) > 0) {
+						while ($row = mysqli_fetch_assoc($result_blogs)) {
+							$date = date("d", strtotime($row['created_at']));
+							$month_year = date("M Y", strtotime($row['created_at']));
+							$image_path = ltrim($row['blog_image'], './'); // Trim the '../' from the image path
 
-						<div class="p-t-32">
-							<h4 class="p-b-15">
-								<a href="blog-detail.php" class="ltext-108 cl2 hov-cl1 trans-04">
-									8 Inspiring Ways to Wear Dresses in the Winter
-								</a>
-							</h4>
-
-							<p class="stext-117 cl6">
-								Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
-								himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
-							</p>
-
-							<div class="flex-w flex-sb-m p-t-18">
-								<span class="flex-w flex-m stext-111 cl2 p-r-30 m-tb-10">
-									<span>
-										<span class="cl4">By</span> Admin
-										<span class="cl12 m-l-4 m-r-6">|</span>
-									</span>
-
-									<span>
-										StreetStyle, Fashion, Couple
-										<span class="cl12 m-l-4 m-r-6">|</span>
-									</span>
-
-									<span>
-										8 Comments
-									</span>
-								</span>
-
-								<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-									Continue Reading
-
-									<i class="fa fa-long-arrow-right m-l-9"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-
-					<!-- item blog -->
-					<div class="p-b-63">
-						<a href="blog-detail.php" class="hov-img0 how-pos5-parent">
-							<img src="images/blog-05.jpg" alt="IMG-BLOG">
-
-							<div class="flex-col-c-m size-123 bg9 how-pos5">
-								<span class="ltext-107 cl2 txt-center">
-									18
-								</span>
-
-								<span class="stext-109 cl3 txt-center">
-									Jan 2018
-								</span>
-							</div>
-						</a>
-
-						<div class="p-t-32">
-							<h4 class="p-b-15">
-								<a href="blog-detail.php" class="ltext-108 cl2 hov-cl1 trans-04">
-									The Great Big List of Men’s Gifts for the Holidays
-								</a>
-							</h4>
-
-							<p class="stext-117 cl6">
-								Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
-								himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
-							</p>
-
-							<div class="flex-w flex-sb-m p-t-18">
-								<span class="flex-w flex-m stext-111 cl2 p-r-30 m-tb-10">
-									<span>
-										<span class="cl4">By</span> Admin
-										<span class="cl12 m-l-4 m-r-6">|</span>
-									</span>
-
-									<span>
-										StreetStyle, Fashion, Couple
-										<span class="cl12 m-l-4 m-r-6">|</span>
-									</span>
-
-									<span>
-										8 Comments
-									</span>
-								</span>
-
-								<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-									Continue Reading
-
-									<i class="fa fa-long-arrow-right m-l-9"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-
-					<!-- item blog -->
-					<div class="p-b-63">
-						<a href="blog-detail.php" class="hov-img0 how-pos5-parent">
-							<img src="images/blog-06.jpg" alt="IMG-BLOG">
-
-							<div class="flex-col-c-m size-123 bg9 how-pos5">
-								<span class="ltext-107 cl2 txt-center">
-									16
-								</span>
-
-								<span class="stext-109 cl3 txt-center">
-									Jan 2018
-								</span>
-							</div>
-						</a>
-
-						<div class="p-t-32">
-							<h4 class="p-b-15">
-								<a href="blog-detail.php" class="ltext-108 cl2 hov-cl1 trans-04">
-									5 Winter-to-Spring Fashion Trends to Try Now
-								</a>
-							</h4>
-
-							<p class="stext-117 cl6">
-								Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
-								himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
-							</p>
-
-							<div class="flex-w flex-sb-m p-t-18">
-								<span class="flex-w flex-m stext-111 cl2 p-r-30 m-tb-10">
-									<span>
-										<span class="cl4">By</span> Admin
-										<span class="cl12 m-l-4 m-r-6">|</span>
-									</span>
-
-									<span>
-										StreetStyle, Fashion, Couple
-										<span class="cl12 m-l-4 m-r-6">|</span>
-									</span>
-
-									<span>
-										8 Comments
-									</span>
-								</span>
-
-								<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-									Continue Reading
-
-									<i class="fa fa-long-arrow-right m-l-9"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-
-					<!-- Pagination -->
+							echo "<div class='p-b-63'>";
+							echo "<a href='blog-detail.php?id=" . $row['id'] . "' class='hov-img0 how-pos5-parent'>";
+							echo "<img src='" . $image_path . "' alt='IMG-BLOG'>"; // Use the trimmed image path
+							echo "<div class='flex-col-c-m size-123 bg9 how-pos5'>";
+							echo "<span class='ltext-107 cl2 txt-center'>$date</span>";
+							echo "<span class='stext-109 cl3 txt-center'>$month_year</span>";
+							echo "</div>";
+							echo "</a>";
+							echo "<div class='p-t-32'>";
+							echo "<h4 class='p-b-15'>";
+							echo "<a href='blog-detail.php?id=" . $row['id'] . "' class='ltext-108 cl2 hov-cl1 trans-04'>" . $row['title'] . "</a>";
+							echo "</h4>";
+							echo "<p class='stext-117 cl6'>" . substr(strip_tags($row['content']), 0, 150) . "...</p>";
+							echo "<div class='flex-w flex-sb-m p-t-18'>";
+							echo "<span class='flex-w flex-m stext-111 cl2 p-r-30 m-tb-10'>";
+							echo "<span><span class='cl4'>By</span> Admin<span class='cl12 m-l-4 m-r-6'>|</span></span>";
+							echo "<span>" . $row['category'] . "<span class='cl12 m-l-4 m-r-6'>|</span></span>";
+							echo "<span>Comments</span>";
+							echo "</span>";
+							echo "<a href='blog-detail.php?id=" . $row['id'] . "' class='stext-101 cl2 hov-cl1 trans-04 m-tb-10'>Continue Reading<i class='fa fa-long-arrow-right m-l-9'></i></a>";
+							echo "</div>";
+							echo "</div>";
+							echo "</div>";
+						}
+					} else {
+						echo "<p>No blog posts available.</p>";
+					}
+					?>
+					<!-- Pagination (You can implement actual pagination logic here) -->
 					<div class="flex-l-m flex-w w-full p-t-10 m-lr--7">
-						<a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7 active-pagination1">
-							1
-						</a>
-
-						<a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7">
-							2
-						</a>
+						<a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7 active-pagination1">1</a>
+						<a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7">2</a>
 					</div>
 				</div>
 			</div>
@@ -194,235 +73,75 @@
 				<div class="side-menu">
 					<div class="bor17 of-hidden pos-relative">
 						<input class="stext-103 cl2 plh4 size-116 p-l-28 p-r-55" type="text" name="search" placeholder="Search">
-
 						<button class="flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04">
 							<i class="zmdi zmdi-search"></i>
 						</button>
 					</div>
 
 					<div class="p-t-55">
-						<h4 class="mtext-112 cl2 p-b-33">
-							Categories
-						</h4>
-
+						<h4 class="mtext-112 cl2 p-b-33">Categories</h4>
 						<ul>
-							<li class="bor18">
-								<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-									Fashion
-								</a>
-							</li>
+							<?php
+							// Fetch categories from the database
+							$sql_categories = "SELECT id, category_name FROM blog_categories";
+							$result_categories = mysqli_query($conn, $sql_categories);
 
-							<li class="bor18">
-								<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-									Beauty
-								</a>
-							</li>
-
-							<li class="bor18">
-								<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-									Street Style
-								</a>
-							</li>
-
-							<li class="bor18">
-								<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-									Life Style
-								</a>
-							</li>
-
-							<li class="bor18">
-								<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-									DIY & Crafts
-								</a>
-							</li>
+							if (mysqli_num_rows($result_categories) > 0) {
+								while ($row = mysqli_fetch_assoc($result_categories)) {
+									echo "<li class='bor18'>";
+									echo "<a href='category.php?id=" . $row['id'] . "' class='dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4'>" . $row['category_name'] . "</a>";
+									echo "</li>";
+								}
+							}
+							?>
 						</ul>
 					</div>
 
 					<div class="p-t-65">
-						<h4 class="mtext-112 cl2 p-b-33">
-							Featured Products
-						</h4>
-
+						<h4 class="mtext-112 cl2 p-b-33">Featured Products</h4>
 						<ul>
-							<li class="flex-w flex-t p-b-30">
-								<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
-									<img src="images/product-min-01.jpg" alt="PRODUCT">
-								</a>
+							<?php
+							// Fetch 3 random products from the database
+							$sql_products = "SELECT id, product_name, product_price, product_image 
+                                             FROM product 
+                                             ORDER BY RAND() 
+                                             LIMIT 3";
+							$result_products = mysqli_query($conn, $sql_products);
 
-								<div class="size-215 flex-col-t p-t-8">
-									<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-										White Shirt With Pleat Detail Back
-									</a>
 
-									<span class="stext-116 cl6 p-t-20">
-										$19.00
-									</span>
-								</div>
-							</li>
-
-							<li class="flex-w flex-t p-b-30">
-								<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
-									<img src="images/product-min-02.jpg" alt="PRODUCT">
-								</a>
-
-								<div class="size-215 flex-col-t p-t-8">
-									<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-										Converse All Star Hi Black Canvas
-									</a>
-
-									<span class="stext-116 cl6 p-t-20">
-										$39.00
-									</span>
-								</div>
-							</li>
-
-							<li class="flex-w flex-t p-b-30">
-								<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
-									<img src="images/product-min-03.jpg" alt="PRODUCT">
-								</a>
-
-								<div class="size-215 flex-col-t p-t-8">
-									<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-										Nixon Porter Leather Watch In Tan
-									</a>
-
-									<span class="stext-116 cl6 p-t-20">
-										$17.00
-									</span>
-								</div>
-							</li>
-						</ul>
-					</div>
-
-					<div class="p-t-55">
-						<h4 class="mtext-112 cl2 p-b-20">
-							Archive
-						</h4>
-
-						<ul>
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										July 2018
-									</span>
-
-									<span>
-										(9)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										June 2018
-									</span>
-
-									<span>
-										(39)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										May 2018
-									</span>
-
-									<span>
-										(29)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										April 2018
-									</span>
-
-									<span>
-										(35)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										March 2018
-									</span>
-
-									<span>
-										(22)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										February 2018
-									</span>
-
-									<span>
-										(32)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										January 2018
-									</span>
-
-									<span>
-										(21)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										December 2017
-									</span>
-
-									<span>
-										(26)
-									</span>
-								</a>
-							</li>
+							if (mysqli_num_rows($result_products) > 0) {
+								while ($row = mysqli_fetch_assoc($result_products)) {
+									$image_src = "./site_images/" . $row['product_image'];
+									// Define the desired width and height for the image
+									$image_width = 100; // Example width in pixels
+									$image_height = 100; // Example height in pixels
+									echo "<li class='flex-w flex-t p-b-30'>";
+									echo "<a href='product-detail.php?id=" . $row['id'] . "' class='wrao-pic-w size-214 hov-ovelay1 m-r-20'>";
+									echo "<img src='" . $image_src . "' alt='PRODUCT' style='width: {$image_width}px; height: {$image_height}px;'>";
+									echo "</a>";
+									echo "<div class='size-215 flex-col-t p-t-8'>";
+									echo "<a href='product-detail.php?id=" . $row['id'] . "' class='stext-116 cl8 hov-cl1 trans-04'>" . $row['product_name'] . "</a>";
+									echo "<span class='stext-116 cl6 p-t-20'>$" . $row['product_price'] . "</span>";
+									echo "</div>";
+									echo "</li>";
+								}
+							}
+							?>
 						</ul>
 					</div>
 
 					<div class="p-t-50">
-						<h4 class="mtext-112 cl2 p-b-27">
-							Tags
-						</h4>
-
+						<h4 class="mtext-112 cl2 p-b-27">Tags</h4>
 						<div class="flex-w m-r--5">
-							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Fashion
-							</a>
-
-							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Lifestyle
-							</a>
-
-							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Denim
-							</a>
-
-							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Streetstyle
-							</a>
-
-							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Crafts
-							</a>
+							<!-- Static Tags -->
+							<a href='tag.php?name=Decor' class='flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5'>Decor</a>
+							<a href='tag.php?name=Tips' class='flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5'>Tips</a>
+							<a href='tag.php?name=Trends' class='flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5'>Trends</a>
+							<a href='tag.php?name=Design' class='flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5'>Design</a>
+							<a href='tag.php?name=Highlights' class='flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5'>Highlights</a>
+							<a href='tag.php?name=Stories' class='flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5'>Stories</a>
+							<a href='tag.php?name=Top' class='flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5'>Top</a>
+							<a href='tag.php?name=Gadgets' class='flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5'>Gadgets</a>
 						</div>
 					</div>
 				</div>
@@ -430,7 +149,6 @@
 		</div>
 	</div>
 </section>
-
 
 <!-- include footer -->
 <?php include 'footer.php'; ?>

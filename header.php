@@ -60,7 +60,7 @@
                                         <a href="index.php">Shop</a>
                                     </li>
                                     <li style="margin: 0 10px;">
-                                        <!-- <a href="blog.php">Blog</a> -->
+                                        <a href="blog.php">Blog</a>
                                     </li>
                                 </ul>
                             </div>
@@ -131,7 +131,7 @@
                 </li>
 
                 <li>
-                    <!-- <a href="blog.php">Blog</a> -->
+                    <a href="blog.php">Blog</a>
                 </li>
 
 
